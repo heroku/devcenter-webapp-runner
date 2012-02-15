@@ -1,18 +1,21 @@
-# Deploy a Java Web Application that launches with Jetty Runner
+# Deploy a Java Web Application that launches in a Tomcat container using Webapp Runner
+
+Follow each step to build an app from scratch, or skip to the end get the source for this article. You can also use almost any existing Maven webapp project.
 
 ## Prerequisites
 
 * Basic Java knowledge, including an installed version of the JVM and Maven.
 * Basic Git knowledge, including an installed version of Git.
-* A Java web application. If you don't have one follow the first step to create an example. Otherwise skip that step.
 
-### What is Jetty and Jetty Runner?
-Jetty is a lightweight Java application server that offers a flexible array of options for how it can be launched. One popular option is using embedded Jetty the way that the [java quickstart](http://devcenter.heroku.com/java) does. Another good option is the Jetty Runner jar file. Each version of Jetty that is released includes a Jetty Runner jar. This jar can be run directly from the java command and can be passed a war file to load right on the command line. An example of this would be:
+### What is Webapp Runner?
+Webapp Runner allows you to launch an application in a Tomcat container on any computer that has a JRE installed. No previous steps to install Tomcat are required when using Webapp Runner. It's just a jar file that can be executed and configured using the `java` command.
 
+When using Webapp Runner you'll launch your application locally and on Heroku with a command like this:
+    
     :::term
-    $ java -jar jetty-runner.jar application.war
+    $ java -jar webapp-runner.jar application.war
 
-Jetty Runner will then launch a Jetty instance with the given war deployed to it.
+Webapp Runner will then launch a Tomcat instance with the given war deployed to it. This takes advantage of Tomcat's embedded APIs and is similar to an option that Jetty has offered for some time: [Jetty Runner](http://blogs.webtide.com/janb/entry/jetty_runner).
 
 ## Create an application if you don't already have one
 
@@ -25,9 +28,9 @@ Jetty Runner will then launch a Jetty instance with the given war deployed to it
     
 (you can pick any groupId or artifactId). You now have a complete Java web app in the `helloworld` directory.
 
-## Configure Maven to Download Jetty Runner
+## Configure Maven to Download Webapp Runner
 
-Although not necessary for using Jetty Runner it's a good idea to have your build tool download Jetty Runner for you since your application will need it to run. You could, of course, just download Jetty Runner and use it to launch your application without doing this. However having all of your dependencies defined in your build descriptor is important for application portability and repeatability of deployment. In this case we're using Maven so we'll use the dependency plugin to download the jar. Add the following plugin configuration to your pom.xml:
+Although not necessary for using Webapp Runner it's a good idea to have your build tool download Webapp Runner for you since your application will need it to run. You could, of course, just download Webapp Runner and use it to launch your application without doing this. However having all of your dependencies defined in your build descriptor is important for application portability and repeatability of deployment. In this case we're using Maven so we'll use the dependency plugin to download the jar. Add the following plugin configuration to your pom.xml:
 
     <build>
         ...
@@ -44,10 +47,10 @@ Although not necessary for using Jetty Runner it's a good idea to have your buil
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.mortbay.jetty</groupId>
-                                    <artifactId>jetty-runner</artifactId>
-                                    <version>7.5.4.v20111024</version>
-                                    <destFileName>jetty-runner.jar</destFileName>
+                                    <groupId>com.github.jsimone</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>7.0.22</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -67,7 +70,7 @@ To build your application simply run:
 And then run your app using the java command:
 
     :::term
-    $ java -jar target/dependency/jetty-runner.jar target/*.war
+    $ java -jar target/dependency/webapp-runner.jar target/*.war
 
 That's it. Your application should start up on port 8080.
 
@@ -85,6 +88,7 @@ You declare how you want your application executed in `Procfile` in the project 
 Commit your changes to Git:
 
     :::term
+    $ git init
     $ git add .
     $ git commit -m "Ready to deploy"
 
@@ -133,3 +137,9 @@ Congratulations! Your web app should now be up and running on Heroku. Open it in
 
     :::term  
     $ heroku open
+
+## Clone the Source
+
+If you want to skip the creation steps you can clone the finished sample:
+
+    $ git clone git@github.com:heroku/devcenter-webapp-runner.git
