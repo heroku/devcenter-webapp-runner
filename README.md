@@ -14,8 +14,19 @@ When using Webapp Runner you'll launch your application locally and on Heroku wi
     
     :::term
     $ java -jar webapp-runner.jar application.war
+    deploying app from: /Users/johnsimone/dev/gitrepos/devcenter-webapp-runner/target/webappRunnerSample.war
+    Feb 14, 2012 5:21:44 PM org.apache.coyote.AbstractProtocol init
+    INFO: Initializing ProtocolHandler ["http-bio-8080"]
+    Feb 14, 2012 5:21:44 PM org.apache.catalina.core.StandardService startInternal
+    INFO: Starting service Tomcat
+    Feb 14, 2012 5:21:44 PM org.apache.catalina.core.StandardEngine startInternal
+    INFO: Starting Servlet Engine: Apache Tomcat/7.0.22
+    Feb 14, 2012 5:21:44 PM org.apache.catalina.startup.ContextConfig webConfig
+    INFO: No global web.xml found
+    Feb 14, 2012 5:21:44 PM org.apache.coyote.AbstractProtocol start
+    INFO: Starting ProtocolHandler ["http-bio-8080"]
 
-Webapp Runner will then launch a Tomcat instance with the given war deployed to it. This takes advantage of Tomcat's embedded APIs and is similar to an option that Jetty has offered for some time: [Jetty Runner](http://blogs.webtide.com/janb/entry/jetty_runner).
+Webapp Runner will then launch a Tomcat instance with the given war deployed to it. This takes advantage of Tomcat's embedded APIs and is similar to an option that Jetty offers: [Jetty Runner](http://blogs.webtide.com/janb/entry/jetty_runner).
 
 ## Create an application if you don't already have one
 
@@ -81,7 +92,7 @@ That's it. Your application should start up on port 8080.
 You declare how you want your application executed in `Procfile` in the project root. Create this file with a single line:
 
     :::term
-    web:    java $JAVA_OPTS -jar target/dependency/jetty-runner.jar --port $PORT target/*.war
+    web:    java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
 
 ## Deploy to Heroku
 
@@ -117,7 +128,7 @@ Deploy your code:
            [INFO] Scanning for projects...
            [INFO]                                                                         
            [INFO] ------------------------------------------------------------------------
-           [INFO] Building petclinic 0.1.0.BUILD-SNAPSHOT
+           [INFO] Building webappRunnerSample Maven Webapp 1.0-SNAPSHOT
            [INFO] ------------------------------------------------------------------------
            ...
            [INFO] ------------------------------------------------------------------------
@@ -129,7 +140,7 @@ Deploy your code:
            [INFO] ------------------------------------------------------------------------
     -----> Discovering process types
            Procfile declares types -> web
-    -----> Compiled slug size is 62.7MB
+    -----> Compiled slug size is 4.5MB
     -----> Launching... done, v5
            http://pure-window-800.herokuapp.com deployed to Heroku
 
