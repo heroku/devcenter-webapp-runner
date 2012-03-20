@@ -60,7 +60,7 @@ Although not necessary for using Webapp Runner it's a good idea to have your bui
                                 <artifactItem>
                                     <groupId>com.github.jsimone</groupId>
                                     <artifactId>webapp-runner</artifactId>
-                                    <version>7.0.22</version>
+                                    <version>7.0.22.3</version>
                                     <destFileName>webapp-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
@@ -149,8 +149,41 @@ Congratulations! Your web app should now be up and running on Heroku. Open it in
     :::term  
     $ heroku open
 
+## Use Distributed HTTP Sessions with Memcache
+
+Storing any type of state on the server side of your aplication is a barrier to scalability. The best way to keep state is to directly use a database or some other data store that all instances of your application can share. However some Java frameworks rely on using javax.servlet.http.HttpSession to store their state information. In these cases you can use a session mananger that is backed by a shared data store such as memcache.
+
+Webapp runner supports the memcached-session-manager for Tomcat. In order to enable memcache backed sessions you need to make the configuration for your memcache instance available through environment variables and then enable the sesssion manager.
+
+### Make memcache configuration information available
+
+The [Heroku Memcache Add On](https://addons.heroku.com/memcache) will set the required environment variables for you. Once you have an existing app get the add on by running:
+
+    :::term
+    $ heroku addons:add memcache:5mb
+
+Note: you may have to [verify](https://api.heroku.com/verify) your account before you can add this add on.
+
+When running locally you can either set up a local install of memcache or connect to the remote memcache service provisioned for you by the Heroku add on.
+
+When used with webapp runner the memcache backed session manager looks for 3 environment variables: MEMCACHE_SERVERS, MEMCACHE_USERNAME, MEMCACHE_PASSWORD. You can set these to point to a local memcache install or connect to the remote memcache service provisioned for you by the Heroku add on by running `heroku config` and copying the values into local environment variables.
+
+### Enable memcached-session-manager
+
+To enable memcache backed sessions with webapp runner you include the following flag: `--session_manager memcache`
+
+So if launching locally your command would now look like:
+
+    :::term
+    $ java -jar target/dependency/webapp-runner.jar --session_manager memcache target/*.war
+
+Or your Procfile would look like:
+
+    :::term
+    web:    java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT --session_manager memcache target/*.war
+
 ## Clone the Source
 
-If you want to skip the creation steps you can clone the finished sample:
+If you want to skip the creation steps you can clone the finished sample (without memcache backed session):
 
     $ git clone git@github.com:heroku/devcenter-webapp-runner.git
