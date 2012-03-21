@@ -151,7 +151,8 @@ Congratulations! Your web app should now be up and running on Heroku. Open it in
 
 ## Use Distributed HTTP Sessions with Memcache
 
-Storing any type of state on the server side of your aplication is a barrier to scalability. The best way to keep state is to directly use a database or some other data store that all instances of your application can share. However some Java frameworks rely on using javax.servlet.http.HttpSession to store their state information. In these cases you can use a session mananger that is backed by a shared data store such as memcache.
+Explicitly storing session state in a database or other backend data store is a more scalable alternative to using distributed HTTP sessions. To find out if distributed HTTP sessions are the best design choice for your application see the
+article on [distrubted HTTP sessions](...).
 
 Webapp runner supports the memcached-session-manager for Tomcat. In order to enable memcache backed sessions you need to make the configuration for your memcache instance available through environment variables and then enable the sesssion manager.
 
