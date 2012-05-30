@@ -26,7 +26,7 @@ When using Webapp Runner you'll launch your application locally and on Heroku wi
     Feb 14, 2012 5:21:44 PM org.apache.coyote.AbstractProtocol start
     INFO: Starting ProtocolHandler ["http-bio-8080"]
 
-Webapp Runner will then launch a Tomcat instance with the given war deployed to it. This takes advantage of Tomcat's embedded APIs and is similar to an option that Jetty offers: [Jetty Runner](http://blogs.webtide.com/janb/entry/jetty_runner).
+Webapp Runner will then launch a Tomcat instance with the given war deployed to it. This takes advantage of Tomcat's embedded APIs and is similar to an option that Jetty offers: [Jetty Runner](http://blogs.webtide.com/janb/entry/jetty_runner). Webapp Runner is (open source)[http://github.com/jsimone/webapp-runner] so you can view or contribute to the source code.
 
 ## Create an application if you don't already have one
 
@@ -188,3 +188,7 @@ Or your Procfile would look like:
 If you want to skip the creation steps you can clone the finished sample (without memcache backed session):
 
     $ git clone git@github.com:heroku/devcenter-webapp-runner.git
+
+## Clone a Template
+
+One of the tempalates available at (java.heroku.com)[http://java.heroku.com] uses Webapp Runner with Spring MVC. You can clone this template into your Heroku account by going (here)[https://api.heroku.com/myapps/template-java-spring-hibernate/clone].
