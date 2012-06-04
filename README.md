@@ -1,4 +1,6 @@
-# Deploy a Java Web Application that launches in a Tomcat container using Webapp Runner
+Webapp Runner allows you to launch an application in a Tomcat container on any computer that has a JRE installed. No previous steps to install Tomcat are required when using Webapp Runner. It's just a jar file that can be executed and configured using the `java` command.
+
+This article will walk you through building an application that launches with Webapp Runner and deploying that application to Heroku.
 
 Follow each step to build an app from scratch, or skip to the end get the source for this article. You can also use almost any existing Maven webapp project.
 
@@ -7,8 +9,7 @@ Follow each step to build an app from scratch, or skip to the end get the source
 * Basic Java knowledge, including an installed version of the JVM and Maven.
 * Basic Git knowledge, including an installed version of Git.
 
-### What is Webapp Runner?
-Webapp Runner allows you to launch an application in a Tomcat container on any computer that has a JRE installed. No previous steps to install Tomcat are required when using Webapp Runner. It's just a jar file that can be executed and configured using the `java` command.
+### How Does Webapp Runner Work?
 
 When using Webapp Runner you'll launch your application locally and on Heroku with a command like this:
     
@@ -85,16 +86,16 @@ And then run your app using the java command:
 
 That's it. Your application should start up on port 8080.
 
-# Deploy your Application to Heroku
+## Deploy your Application to Heroku
 
-## Create a Procfile
+### Create a Procfile
 
 You declare how you want your application executed in `Procfile` in the project root. Create this file with a single line:
 
     :::term
     web:    java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
 
-## Deploy to Heroku
+### Deploy to Heroku
 
 Commit your changes to Git:
 
@@ -152,7 +153,7 @@ Congratulations! Your web app should now be up and running on Heroku. Open it in
 ## Use Distributed HTTP Sessions with Memcache
 
 Explicitly storing session state in a database or other backend data store is a more scalable alternative to using distributed HTTP sessions. To find out if distributed HTTP sessions are the best design choice for your application see the
-article on [distrubted HTTP sessions](...).
+article on [distributed HTTP sessions](memcache-http-sessions-java).
 
 Webapp runner supports the memcached-session-manager for Tomcat. In order to enable memcache backed sessions you need to make the configuration for your memcache instance available through environment variables and then enable the sesssion manager.
 
@@ -183,12 +184,12 @@ Or your Procfile would look like:
     :::term
     web:    java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT --session_manager memcache target/*.war
 
-## Clone the Source
+## Clone the source
 
 If you want to skip the creation steps you can clone the finished sample (without memcache backed session):
 
     $ git clone git@github.com:heroku/devcenter-webapp-runner.git
 
-## Clone a Template
+## Clone as a Heroku app
 
 One of the tempalates available at [java.heroku.com](http://java.heroku.com) uses Webapp Runner with Spring MVC. You can clone this template into your Heroku account by going [here](https://api.heroku.com/myapps/template-java-spring-hibernate/clone).
