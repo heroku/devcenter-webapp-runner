@@ -107,8 +107,8 @@ Commit your changes to Git:
 Create the app on the Cedar stack:
 
     :::term
-    $ heroku create --stack cedar
-    Creating high-lightning-129... done, stack is cedar
+    $ heroku create
+    Creating high-lightning-129... done, stack is heroku-22
     http://high-lightning-129.herokuapp.com/ | git@heroku.com:high-lightning-129.git
     Git remote heroku added
 
